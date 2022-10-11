@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { displayDate } from "../../../utils/displayDate";
-import API from "../../../api";
+import React, { useEffect, useState } from "react"
+import PropTypes from "prop-types"
+import { displayDate } from "../../../utils/displayDate"
+import API from "../../../api"
 const Comment = ({
     content,
     created_at: created,
@@ -9,15 +9,15 @@ const Comment = ({
     userId,
     onRemove
 }) => {
-    const [user, setUser] = useState();
-    const [isLoading, setIsLoading] = useState(false);
+    const [user, setUser] = useState()
+    const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
-        setIsLoading(true);
+        setIsLoading(true)
         API.users.getById(userId).then((data) => {
-            setUser(data);
-            setIsLoading(false);
-        });
-    }, []);
+            setUser(data)
+            setIsLoading(false)
+        })
+    }, [])
 
     return (
         <div className="bg-light card-body  mb-3">
@@ -62,8 +62,8 @@ const Comment = ({
                 )}
             </div>
         </div>
-    );
-};
+    )
+}
 Comment.propTypes = {
     content: PropTypes.string,
     edited_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -71,6 +71,6 @@ Comment.propTypes = {
     userId: PropTypes.string,
     onRemove: PropTypes.func,
     _id: PropTypes.string
-};
+}
 
-export default Comment;
+export default Comment

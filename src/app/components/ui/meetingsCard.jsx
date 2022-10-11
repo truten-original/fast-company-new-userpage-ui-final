@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 const MeetingsCard = ({ value }) => {
     return (
         <div className="card mb-3">
@@ -11,10 +11,10 @@ const MeetingsCard = ({ value }) => {
                 <h1 className="display-1">{value}</h1>
             </div>
         </div>
-    );
-};
+    )
+}
 MeetingsCard.propTypes = {
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-};
+}
 
-export default MeetingsCard;
+export default MeetingsCard

@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 
 const RadioField = ({ options, name, onChange, value, label }) => {
     const handleChange = ({ target }) => {
-        onChange({ name: target.name, value: target.value });
-    };
+        onChange({ name: target.name, value: target.value })
+    }
     return (
         <div className="mb-4">
             <label className="form-label">{label}</label>
@@ -33,8 +33,8 @@ const RadioField = ({ options, name, onChange, value, label }) => {
                 ))}
             </div>
         </div>
-    );
-};
+    )
+}
 
 RadioField.propTypes = {
     options: PropTypes.array,
@@ -42,6 +42,6 @@ RadioField.propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.string,
     label: PropTypes.string
-};
+}
 
-export default RadioField;
+export default RadioField
