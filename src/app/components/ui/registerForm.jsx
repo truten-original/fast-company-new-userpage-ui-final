@@ -20,23 +20,20 @@ const RegisterForm = () => {
     const { quals, isLoadingQuals } = useQualityContext()
     const { professions, isLoading } = useProfession()
     const [errors, setErrors] = useState({})
-
     const getProfessionById = (id) => {
-        for (const prof of professions) {
-            if (prof.value === id) {
-                return { _id: prof.value, name: prof.label }
-            }
-        }
+        const prof = professions.find((item) => item._id === id)
+        return { _id: prof._id, name: prof.name }
     }
     const getQualities = (elements) => {
         const qualitiesArray = []
-        for (const elem of elements) {
-            for (const quality in quals) {
-                if (elem.value === quals[quality].value) {
+        for (let i = 0; i < elements.length; i++) {
+            const currentQual = elements[i]
+            for (let i = 0; i < quals.length; i++) {
+                if (quals[i]._id === currentQual.value) {
                     qualitiesArray.push({
-                        _id: quals[quality].value,
-                        name: quals[quality].label,
-                        color: quals[quality].color
+                        _id: quals[i]._id,
+                        name: quals[i].name,
+                        color: quals[i].color
                     })
                 }
             }
