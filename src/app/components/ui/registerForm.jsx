@@ -7,8 +7,12 @@ import MultiSelectField from "../common/form/multiSelectField"
 import CheckBoxField from "../common/form/checkBoxField"
 import { useQualityContext } from "../../../hooks/useQuality"
 import { useProfession } from "../../../hooks/useProfession"
+import { useAuth } from "../../../hooks/useAuth"
+import { useHistory } from "react-router-dom"
 
 const RegisterForm = () => {
+    const history = useHistory()
+    const { signUp } = useAuth()
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -22,7 +26,7 @@ const RegisterForm = () => {
     const [errors, setErrors] = useState({})
     const getProfessionById = (id) => {
         const prof = professions.find((item) => item._id === id)
-        return { _id: prof._id, name: prof.name }
+        return prof._id
     }
     const getQualities = (elements) => {
         const qualitiesArray = []
@@ -30,11 +34,7 @@ const RegisterForm = () => {
             const currentQual = elements[i]
             for (let i = 0; i < quals.length; i++) {
                 if (quals[i]._id === currentQual.value) {
-                    qualitiesArray.push({
-                        _id: quals[i]._id,
-                        name: quals[i].name,
-                        color: quals[i].color
-                    })
+                    qualitiesArray.push(quals[i]._id)
                 }
             }
         }
@@ -102,16 +102,22 @@ const RegisterForm = () => {
     }
     const isValid = Object.keys(errors).length === 0
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const isValid = validate()
         if (!isValid) return
         const { profession, qualities } = data
-        console.log({
+        const newData = {
             ...data,
             profession: getProfessionById(profession),
             qualities: getQualities(qualities)
-        })
+        }
+        try {
+            await signUp(newData)
+            history.push("/")
+        } catch (error) {
+            setErrors(error)
+        }
     }
     if (!isLoading && !isLoadingQuals) {
         return (
