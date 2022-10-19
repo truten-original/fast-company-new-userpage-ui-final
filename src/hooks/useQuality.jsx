@@ -21,7 +21,7 @@ export const QualityProvider = ({ children }) => {
             setQuals(content)
             setisLoadingQual(false)
         } catch (error) {
-            const { message } = error.response.message
+            const { message } = error.response
             setError(message)
             setisLoadingQual(false)
         }

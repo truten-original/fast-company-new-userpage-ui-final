@@ -8,17 +8,17 @@ import UserTable from "../../ui/usersTable"
 import _ from "lodash"
 import { useUser } from "../../../../hooks/useUsers"
 import { useProfession } from "../../../../hooks/useProfession"
+import { useAuth } from "../../../../hooks/useAuth"
 const UsersListPage = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [searchQuery, setSearchQuery] = useState("")
     const [selectedProf, setSelectedProf] = useState()
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
     const pageSize = 8
-    const { professions } = useProfession()
+    const { professions, isLoading } = useProfession()
     const { users } = useUser()
-    const handleDelete = (userId) => {
-        // setUsers(users.filter((user) => user._id !== userId))
-    }
+    const { currentUser } = useAuth()
+
     const handleToggleBookMark = (id) => {
         // const newArray = users.map((user) => {
         //     if (user._id === id) {
@@ -58,8 +58,12 @@ const UsersListPage = () => {
                               .indexOf(searchQuery.toLowerCase()) !== -1
                   )
                 : selectedProf
-                ? users.filter((user) => user.profession === selectedProf._id)
-                : users
+                ? users.filter(
+                      (user) =>
+                          user.profession === selectedProf._id &&
+                          user._id !== currentUser._id
+                  )
+                : users.filter((user) => user._id !== currentUser._id)
 
         const count = filteredUsers.length
         const sortedUsers = _.orderBy(
@@ -73,7 +77,7 @@ const UsersListPage = () => {
         }
         return (
             <div className="d-flex">
-                {professions && (
+                {professions && !isLoading && (
                     <div className="d-flex flex-column flex-shrink-0 p-3">
                         <GroupList
                             selectedItem={selectedProf}
@@ -103,7 +107,6 @@ const UsersListPage = () => {
                             users={usersCrop}
                             onSort={handleSort}
                             selectedSort={sortBy}
-                            onDelete={handleDelete}
                             onToggleBookMark={handleToggleBookMark}
                         />
                     )}

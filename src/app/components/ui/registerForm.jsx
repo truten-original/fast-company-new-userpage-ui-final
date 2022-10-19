@@ -8,13 +8,16 @@ import CheckBoxField from "../common/form/checkBoxField"
 import { useQualityContext } from "../../../hooks/useQuality"
 import { useProfession } from "../../../hooks/useProfession"
 import { useAuth } from "../../../hooks/useAuth"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 
 const RegisterForm = () => {
+    const { params } = useParams()
+    console.log(params)
     const history = useHistory()
     const { signUp } = useAuth()
     const [data, setData] = useState({
         email: "",
+        name: "",
         password: "",
         profession: "",
         sex: "male",
@@ -65,6 +68,15 @@ const RegisterForm = () => {
                 message: "Email введен некорректно"
             }
         },
+        name: {
+            isRequired: {
+                message: "имя обязательно для заполнения"
+            },
+            min: {
+                message: "имя должно состоять мимнимум из трех символов",
+                value: 3
+            }
+        },
         password: {
             isRequired: {
                 message: "Пароль обязателен для заполнения"
@@ -112,12 +124,12 @@ const RegisterForm = () => {
             profession: getProfessionById(profession),
             qualities: getQualities(qualities)
         }
-        try {
-            await signUp(newData)
-            history.push("/")
-        } catch (error) {
-            setErrors(error)
-        }
+        // try {
+        await signUp(newData)
+        history.push("/")
+        // } catch (error) {
+        //     setErrors(error)
+        // }
     }
     if (!isLoading && !isLoadingQuals) {
         return (
@@ -128,6 +140,13 @@ const RegisterForm = () => {
                     value={data.email}
                     onChange={handleChange}
                     error={errors.email}
+                />
+                <TextField
+                    label="Имя"
+                    name="name"
+                    value={data.name}
+                    onChange={handleChange}
+                    error={errors.name}
                 />
                 <TextField
                     label="Пароль"

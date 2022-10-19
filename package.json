@@ -11,6 +11,8 @@
         "bootstrap-icons": "^1.8.3",
         "dotenv": "^16.0.3",
         "lodash": "^4.17.21",
+        "nano": "^10.0.0",
+        "nanoid": "^4.0.0",
         "proptypes": "^1.1.0",
         "react": "^18.2.0",
         "react-bootstrap": "^2.4.0",

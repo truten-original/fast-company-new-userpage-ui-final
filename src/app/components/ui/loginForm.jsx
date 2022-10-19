@@ -41,7 +41,7 @@ const LoginForm = () => {
             },
             min: {
                 message: "Пароль должен состоять минимум из 8 символов",
-                value: 8
+                value: 3
             }
         }
     }
@@ -61,7 +61,11 @@ const LoginForm = () => {
         if (!isValid) return
         try {
             await signIn({ password: data.password, email: data.email })
-            history.push("/")
+            history.push(
+                history.location?.state?.from?.pathname
+                    ? history.location.state.from.pathname
+                    : "/"
+            )
         } catch (error) {
             setErrors(error)
         }

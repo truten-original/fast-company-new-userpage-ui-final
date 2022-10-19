@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
-import api from "../../../api"
 import UserCard from "../../ui/userCard"
 import QualitiesCard from "../../ui/qualitiesCard"
 import MeetingsCard from "../../ui/meetingsCard"
 import Comments from "../../ui/comments"
+import { useUser } from "../../../../hooks/useUsers"
+import { CommentProvider } from "../../../../hooks/useComment"
 
 const UserPage = ({ userId }) => {
+    const { getUser } = useUser()
     const [user, setUser] = useState()
     useEffect(() => {
-        api.users.getById(userId).then((data) => setUser(data))
-    }, [])
+        console.log("rend")
+        ;(async () => {
+            const content = await getUser(userId)
+            setUser(content)
+        })()
+    }, [userId])
+
     if (user) {
         return (
             <div className="container">
@@ -21,7 +28,9 @@ const UserPage = ({ userId }) => {
                         <MeetingsCard value={user.completedMeetings} />
                     </div>
                     <div className="col-md-8">
-                        <Comments />
+                        <CommentProvider>
+                            <Comments />
+                        </CommentProvider>
                     </div>
                 </div>
             </div>

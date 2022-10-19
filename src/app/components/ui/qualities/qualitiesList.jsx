@@ -5,11 +5,11 @@ import { useQualityContext } from "../../../../hooks/useQuality"
 
 const QualitiesList = ({ qualities }) => {
     const { getQual, isLoadingQual } = useQualityContext()
-    const qualsArr = qualities.map((quality) => getQual(quality))
+    const qualsArr = qualities?.map((quality) => getQual(quality))
     return (
         <>
             {!isLoadingQual &&
-                qualsArr.map((qual) => <Quality key={qual._id} {...qual} />)}
+                qualsArr?.map((qual) => <Quality key={qual._id} {...qual} />)}
         </>
     )
 }

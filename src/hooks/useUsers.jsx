@@ -12,6 +12,7 @@ const UserProvider = ({ children }) => {
     const [users, setUsers] = useState([])
     const [isLoading, setIsloading] = useState(true)
     const [error, setError] = useState(null)
+
     useEffect(() => {
         getUsers()
     }, [])
@@ -31,13 +32,18 @@ const UserProvider = ({ children }) => {
             errorCatcher(error)
         }
     }
+    async function getUser(id) {
+        const { content } = await userService.getUser(id)
+        return content
+    }
+
     function errorCatcher(error) {
-        const { message } = error.response.data
+        const { message } = error.response
         setError(message)
         setIsloading(false)
     }
     return (
-        <UserContext.Provider value={{ users }}>
+        <UserContext.Provider value={{ users, getUser }}>
             {isLoading ? "loading..." : children}
         </UserContext.Provider>
     )
