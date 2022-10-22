@@ -11,10 +11,23 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
                   label: option.name || option.label,
                   color: option.color || option.color
               }))
-    console.log(options)
-    console.log(optionsArray)
+    const transformDefaultValue = (options, optionsArr) => {
+        const currentPersonOptions = []
+        for (const option of options) {
+            for (const currentOption of optionsArr) {
+                if (option === currentOption.value) {
+                    currentPersonOptions.push(currentOption)
+                }
+            }
+        }
+        return currentPersonOptions
+    }
+    const currentPersonOptions = transformDefaultValue(
+        defaultValue,
+        optionsArray
+    )
     const handleChange = (value) => {
-        onChange({ name: name, value })
+        onChange({ name, value })
     }
     return (
         <div className="mb-4">
@@ -22,7 +35,7 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
             <Select
                 isMulti
                 closeMenuOnSelect={false}
-                defaultValue={defaultValue}
+                defaultValue={currentPersonOptions}
                 options={optionsArray}
                 className="basic-multi-select"
                 classNamePrefix="select"

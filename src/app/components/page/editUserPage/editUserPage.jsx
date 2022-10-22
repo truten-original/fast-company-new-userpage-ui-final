@@ -15,11 +15,11 @@ const EditUserPage = () => {
     const history = useHistory()
     const { userId } = useParams()
     const [data, setData] = useState({
-        name: "",
-        email: "",
-        profession: "",
-        sex: "male",
-        qualities: []
+        name: currentUser.name,
+        email: currentUser.email,
+        profession: currentUser.profession,
+        sex: currentUser.sex,
+        qualities: currentUser.qualities
     })
     const { professions, getProfession } = useProfession()
     const { quals } = useQualityContext()
@@ -27,7 +27,7 @@ const EditUserPage = () => {
     useEffect(() => {
         checkUser()
     }, [])
-
+    console.log(currentUser.qualities)
     const checkUser = () => {
         if (currentUser._id === userId) {
             history.replace(`users/${currentUser._id}/edit`)
@@ -88,7 +88,6 @@ const EditUserPage = () => {
             [target.name]: target.value
         }))
     }
-
     const isValid = Object.keys(errors).length === 0
     return (
         <div className="container mt-5">
