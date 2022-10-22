@@ -11,7 +11,6 @@ const UserPage = ({ userId }) => {
     const { getUser } = useUser()
     const [user, setUser] = useState()
     useEffect(() => {
-        console.log("rend")
         ;(async () => {
             const content = await getUser(userId)
             setUser(content)

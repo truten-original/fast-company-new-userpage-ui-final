@@ -29,8 +29,8 @@ const EditUserPage = () => {
     }, [])
     console.log(currentUser.qualities)
     const checkUser = () => {
-        if (currentUser._id === userId) {
-            history.replace(`users/${currentUser._id}/edit`)
+        if (currentUser._id !== userId) {
+            history.replace(`/users/${currentUser._id}/edit`)
         }
     }
     const getQualities = (elements) => {
