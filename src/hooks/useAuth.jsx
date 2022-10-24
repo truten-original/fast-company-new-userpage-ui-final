@@ -19,6 +19,7 @@ const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null)
     const [currentUser, setCurrentUser] = useState()
     const [isLoading, setisLoading] = useState(true)
+    console.log(currentUser)
     useEffect(() => {
         if (error) {
             toast.error(error)

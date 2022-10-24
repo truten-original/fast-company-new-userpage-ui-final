@@ -2,7 +2,14 @@ import React from "react"
 import Select from "react-select"
 import PropTypes from "prop-types"
 
-const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
+const MultiSelectField = ({
+    options,
+    onChange,
+    name,
+    label,
+    defaultValue,
+    error
+}) => {
     const optionsArray =
         !Array.isArray(options) && typeof options === "object"
             ? Object.values(options)
@@ -11,6 +18,7 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
                   label: option.name || option.label,
                   color: option.color || option.color
               }))
+    console.log(error)
     const transformDefaultValue = (options, optionsArr) => {
         const currentPersonOptions = []
         for (const option of options) {
@@ -42,6 +50,7 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
                 onChange={handleChange}
                 name={name}
             />
+            {error && <div className="invalid-feedback">{error}</div>}
         </div>
     )
 }
@@ -50,7 +59,8 @@ MultiSelectField.propTypes = {
     onChange: PropTypes.func,
     name: PropTypes.string,
     label: PropTypes.string,
-    defaultValue: PropTypes.array
+    defaultValue: PropTypes.array,
+    error: PropTypes.string
 }
 
 export default MultiSelectField

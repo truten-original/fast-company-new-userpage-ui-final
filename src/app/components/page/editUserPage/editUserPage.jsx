@@ -21,13 +21,13 @@ const EditUserPage = () => {
         sex: currentUser.sex,
         qualities: currentUser.qualities
     })
+    console.log(data)
     const { professions, getProfession } = useProfession()
     const { quals } = useQualityContext()
     const [errors, setErrors] = useState({})
     useEffect(() => {
         checkUser()
     }, [])
-    console.log(currentUser.qualities)
     const checkUser = () => {
         if (currentUser._id !== userId) {
             history.replace(`/users/${currentUser._id}/edit`)
