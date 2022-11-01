@@ -1,37 +1,45 @@
-const tokenKey = "jwt-token"
-const refreshKey = "jwt-refresh-Token"
-const expiresKey = "jwt-expires"
-const userIdKey = "user-local-id"
-const setTokens = ({ refreshToken, idToken, localId, expiresIn = 3600 }) => {
+const TOKEN_KEY = "jwt-token"
+const REFRESH_KEY = "jwt-refresh-token"
+const EXPIRES_KEY = "jwt-expires"
+const USERID_KEY = "user-local-id"
+
+export function setTokens({
+    refreshToken,
+    idToken,
+    localId,
+    expiresIn = 3600
+}) {
     const expiresDate = new Date().getTime() + expiresIn * 1000
-    localStorage.setItem(userIdKey, localId)
-    localStorage.setItem(tokenKey, idToken)
-    localStorage.setItem(refreshKey, refreshToken)
-    localStorage.setItem(expiresKey, expiresDate)
+    localStorage.setItem(USERID_KEY, localId)
+    localStorage.setItem(TOKEN_KEY, idToken)
+    localStorage.setItem(REFRESH_KEY, refreshToken)
+    localStorage.setItem(EXPIRES_KEY, expiresDate)
 }
-const removeAuthData = () => {
-    localStorage.removeItem(userIdKey)
-    localStorage.removeItem(tokenKey)
-    localStorage.removeItem(refreshKey)
-    localStorage.removeItem(expiresKey)
+export function getAccessToken() {
+    return localStorage.getItem(TOKEN_KEY)
 }
-const getAccessToken = () => {
-    return localStorage.getItem(tokenKey)
+export function getRefreshToken() {
+    return localStorage.getItem(REFRESH_KEY)
 }
-const getRefreshToken = () => {
-    return localStorage.getItem(refreshKey)
+export function removeAuthData() {
+    localStorage.removeItem(USERID_KEY)
+    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem(REFRESH_KEY)
+    localStorage.removeItem(EXPIRES_KEY)
 }
-const getExpiresKey = () => {
-    return localStorage.getItem(expiresKey)
+
+export function getTokenExpiresDate() {
+    return localStorage.getItem(EXPIRES_KEY)
 }
-const getUserId = () => {
-    return localStorage.getItem(userIdKey)
+export function getUserId() {
+    return localStorage.getItem(USERID_KEY)
 }
+
 const localStorageService = {
     setTokens,
     getAccessToken,
     getRefreshToken,
-    getExpiresKey,
+    getTokenExpiresDate,
     getUserId,
     removeAuthData
 }

@@ -1,23 +1,22 @@
 import { orderBy } from "lodash"
 import React from "react"
-// import api from "../../api"
-// import { useParams } from "react-router-dom"
-import { useComment } from "../../../hooks/useComment"
 import CommentsList, { AddCommentForm } from "../common/comments"
+import { useComments } from "../../hooks/useComments"
+
 const Comments = () => {
-    // const { userId } = useParams()
-    const { createComment, comments, removeComment } = useComment()
-    const handleSubmit = async (data) => {
+    const { createComment, comments, removeComment } = useComments()
+
+    const handleSubmit = (data) => {
         createComment(data)
         // api.comments
         //     .add({ ...data, pageId: userId })
-        //     .then((data) => setComments([...comments, data]))
+        //     .then((data) => setComments([...comments, data]));
     }
     const handleRemoveComment = (id) => {
         removeComment(id)
         // api.comments.remove(id).then((id) => {
-        //     setComments(comments.filter((x) => x._id !== id))
-        // })
+        //     setComments(comments.filter((x) => x._id !== id));
+        // });
     }
     const sortedComments = orderBy(comments, ["created_at"], ["desc"])
     return (

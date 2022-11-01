@@ -25,7 +25,6 @@ const AddCommentForm = ({ onSubmit }) => {
         setErrors(errors)
         return Object.keys(errors).length === 0
     }
-
     const clearForm = () => {
         setData({})
         setErrors({})

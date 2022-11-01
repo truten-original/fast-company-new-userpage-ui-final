@@ -2,40 +2,14 @@ import React from "react"
 import Select from "react-select"
 import PropTypes from "prop-types"
 
-const MultiSelectField = ({
-    options,
-    onChange,
-    name,
-    label,
-    defaultValue,
-    error
-}) => {
+const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
     const optionsArray =
         !Array.isArray(options) && typeof options === "object"
             ? Object.values(options)
-            : options.map((option) => ({
-                  value: option._id || option.value,
-                  label: option.name || option.label,
-                  color: option.color || option.color
-              }))
-    console.log(error)
-    const transformDefaultValue = (options, optionsArr) => {
-        const currentPersonOptions = []
-        for (const option of options) {
-            for (const currentOption of optionsArr) {
-                if (option === currentOption.value) {
-                    currentPersonOptions.push(currentOption)
-                }
-            }
-        }
-        return currentPersonOptions
-    }
-    const currentPersonOptions = transformDefaultValue(
-        defaultValue,
-        optionsArray
-    )
+            : options
+
     const handleChange = (value) => {
-        onChange({ name, value })
+        onChange({ name: name, value })
     }
     return (
         <div className="mb-4">
@@ -43,14 +17,13 @@ const MultiSelectField = ({
             <Select
                 isMulti
                 closeMenuOnSelect={false}
-                defaultValue={currentPersonOptions}
+                defaultValue={defaultValue}
                 options={optionsArray}
                 className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={handleChange}
                 name={name}
             />
-            {error && <div className="invalid-feedback">{error}</div>}
         </div>
     )
 }
@@ -59,8 +32,7 @@ MultiSelectField.propTypes = {
     onChange: PropTypes.func,
     name: PropTypes.string,
     label: PropTypes.string,
-    defaultValue: PropTypes.array,
-    error: PropTypes.string
+    defaultValue: PropTypes.array
 }
 
 export default MultiSelectField

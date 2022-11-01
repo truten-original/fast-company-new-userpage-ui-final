@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import UserCard from "../../ui/userCard"
 import QualitiesCard from "../../ui/qualitiesCard"
 import MeetingsCard from "../../ui/meetingsCard"
 import Comments from "../../ui/comments"
-import { useUser } from "../../../../hooks/useUsers"
-import { CommentProvider } from "../../../../hooks/useComment"
+import { CommentsProvider } from "../../../hooks/useComments"
+import { useSelector } from "react-redux"
+import { getUserById } from "../../../store/users"
 
 const UserPage = ({ userId }) => {
-    const { getUser } = useUser()
-    const [user, setUser] = useState()
-    useEffect(() => {
-        ;(async () => {
-            const content = await getUser(userId)
-            setUser(content)
-        })()
-    }, [userId])
+    const user = useSelector(getUserById(userId))
 
     if (user) {
         return (
@@ -27,9 +21,9 @@ const UserPage = ({ userId }) => {
                         <MeetingsCard value={user.completedMeetings} />
                     </div>
                     <div className="col-md-8">
-                        <CommentProvider>
+                        <CommentsProvider>
                             <Comments />
-                        </CommentProvider>
+                        </CommentsProvider>
                     </div>
                 </div>
             </div>

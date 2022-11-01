@@ -1,10 +1,10 @@
 import httpService from "./http.service"
 
-const userEndpoint = "profession/"
+const professionEndpoint = "profession/"
 
 const professionService = {
     get: async () => {
-        const { data } = await httpService.get(userEndpoint)
+        const { data } = await httpService.get(professionEndpoint)
         return data
     }
 }
