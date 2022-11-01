@@ -12,6 +12,7 @@ const commentService = {
     getComments: async (pageId) => {
         const { data } = await httpService.get(commentEndpoint, {
             params: {
+                // eslint-disable-next-line quotes
                 orderBy: '"pageId"',
                 equalTo: `"${pageId}"`
             }
@@ -20,6 +21,7 @@ const commentService = {
     },
     removeComment: async (commentId) => {
         const { data } = await httpService.delete(commentEndpoint + commentId)
+        console.log(data)
         return data
     }
 }

@@ -4,6 +4,7 @@ import authService from "../services/auth.service"
 import localStorageService from "../services/localStorage.service"
 import getRandomInt from "../utils/getRandomInt"
 import history from "../utils/history"
+import generateAuthError from "../utils/generateAuthError"
 
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -57,6 +58,18 @@ const usersSlice = createSlice({
             state.isLoggedIn = false
             state.auth = null
             state.dataLoaded = false
+        },
+        userUpdateRequested: (state) => {
+            state.isLoading = true
+        },
+        userUpdated: (state, { payload }) => {
+            const index = state.entities.findIndex(
+                (user) => user._id === payload._id
+            )
+            state[index] = { ...payload }
+        },
+        authRequested: (state) => {
+            state.error = null
         }
     }
 })
@@ -69,12 +82,15 @@ const {
     authRequestSuccess,
     authRequestFailed,
     userCreated,
-    userLoggedOut
+    userLoggedOut,
+    userUpdated,
+    authRequested
 } = actions
 
-const authRequested = createAction("users/authRequested")
 const userCreateRequested = createAction("users/userCreateRequested")
 const createUserFailed = createAction("users/createUserFailed")
+const updateUserFailed = createAction("users/updateUserFailed")
+const updateUserRequested = createAction("users/updateUserRequested")
 
 export const login =
     ({ payload, redirect }) =>
@@ -87,7 +103,11 @@ export const login =
             localStorageService.setTokens(data)
             history.push(redirect)
         } catch (error) {
-            dispatch(authRequestFailed(error.message))
+            const { code, message } = error.response.data.error
+            if (code === 400) {
+                const errorMessage = generateAuthError(message)
+                dispatch(authRequestFailed(errorMessage))
+            }
         }
     }
 
@@ -134,7 +154,16 @@ function createUser(payload) {
         }
     }
 }
-
+export const updateUser = (payload) => async (dispatch) => {
+    dispatch(updateUserRequested())
+    try {
+        const { content } = await userService.update(payload)
+        dispatch(userUpdated(content))
+        history.push(`/users/${content._id}`)
+    } catch (error) {
+        dispatch(updateUserFailed(error.message))
+    }
+}
 export const loadUsersList = () => async (dispatch, getState) => {
     dispatch(usersRequested())
     try {
@@ -156,7 +185,7 @@ export const getUserById = (userId) => (state) => {
         return state.users.entities.find((u) => u._id === userId)
     }
 }
-
+export const getAuthError = () => (state) => state.users.error
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn
 export const getDataStatus = () => (state) => state.users.dataLoaded
 export const getUsersLoadingStatus = () => (state) => state.users.isLoading
