@@ -4,7 +4,7 @@ import { validator } from "../../../utils/validator"
 import PropTypes from "prop-types"
 
 const AddCommentForm = ({ onSubmit }) => {
-    const [data, setData] = useState({})
+    const [data, setData] = useState({ content: "" })
     const [errors, setErrors] = useState({})
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -32,6 +32,8 @@ const AddCommentForm = ({ onSubmit }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         const isValid = validate()
+        console.log(isValid)
+        console.log(data)
         if (!isValid) return
         onSubmit(data)
         clearForm()

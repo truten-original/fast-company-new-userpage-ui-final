@@ -28,7 +28,7 @@ const commentsSlice = createSlice({
             state.entities.push(payload)
         },
         commentRemovedSucces: (state, { payload }) => {
-            return state.entities.filter((com) => com._id !== payload)
+            state.entities = state.entities.filter((com) => com._id !== payload)
         }
     }
 })
