@@ -1,45 +1,45 @@
-import React, { useContext, useEffect, useState } from "react"
-import { toast } from "react-toastify"
-import PropTypes from "prop-types"
-import qualityService from "../services/quality.service"
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import PropTypes from "prop-types";
+import qualityService from "../services/quality.service";
 
-const QualitiesContext = React.createContext()
+const QualitiesContext = React.createContext();
 
 export const useQualities = () => {
-    return useContext(QualitiesContext)
-}
+    return useContext(QualitiesContext);
+};
 
 export const QualitiesProvider = ({ children }) => {
-    const [qualities, setQualities] = useState([])
-    const [error, setError] = useState(null)
-    const [isLoading, setLoading] = useState(true)
+    const [qualities, setQualities] = useState([]);
+    const [error, setError] = useState(null);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         const getQualities = async () => {
             try {
-                const { content } = await qualityService.fetchAll()
-                setQualities(content)
-                setLoading(false)
+                const { content } = await qualityService.fetchAll();
+                setQualities(content);
+                setLoading(false);
             } catch (error) {
-                errorCatcher(error)
+                errorCatcher(error);
             }
-        }
-        getQualities()
-    }, [])
+        };
+        getQualities();
+    }, []);
     const getQuality = (id) => {
-        return qualities.find((q) => q._id === id)
-    }
+        return qualities.find((q) => q._id === id);
+    };
 
     function errorCatcher(error) {
-        const { message } = error.response.data
-        setError(message)
+        const { message } = error.response.data;
+        setError(message);
     }
     useEffect(() => {
         if (error !== null) {
-            toast(error)
-            setError(null)
+            toast(error);
+            setError(null);
         }
-    }, [error])
+    }, [error]);
 
     return (
         <QualitiesContext.Provider
@@ -51,12 +51,12 @@ export const QualitiesProvider = ({ children }) => {
         >
             {children}
         </QualitiesContext.Provider>
-    )
-}
+    );
+};
 
 QualitiesProvider.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
     ])
-}
+};

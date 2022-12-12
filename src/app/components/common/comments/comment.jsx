@@ -1,8 +1,8 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { displayDate } from "../../../utils/displayDate"
-import { useSelector } from "react-redux"
-import { getCurrentUserId, getUserById } from "../../../store/users"
+import React from "react";
+import PropTypes from "prop-types";
+import { displayDate } from "../../../utils/displayDate";
+import { useSelector } from "react-redux";
+import { getCurrentUserId, getUserById } from "../../../store/users";
 
 const Comment = ({
     content,
@@ -11,8 +11,8 @@ const Comment = ({
     userId,
     onRemove
 }) => {
-    const currentUserId = useSelector(getCurrentUserId())
-    const user = useSelector(getUserById(userId))
+    const currentUserId = useSelector(getCurrentUserId());
+    const user = useSelector(getUserById(userId));
 
     return (
         <div className="bg-light card-body  mb-3">
@@ -51,8 +51,8 @@ const Comment = ({
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 Comment.propTypes = {
     content: PropTypes.string,
     edited_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -60,6 +60,6 @@ Comment.propTypes = {
     userId: PropTypes.string,
     onRemove: PropTypes.func,
     _id: PropTypes.string
-}
+};
 
-export default Comment
+export default Comment;

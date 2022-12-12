@@ -1,64 +1,64 @@
-import React, { useEffect, useState } from "react"
-import PropTypes from "prop-types"
-import { paginate } from "../../../utils/paginate"
-import Pagination from "../../common/pagination"
-import GroupList from "../../common/groupList"
-import SearchStatus from "../../ui/searchStatus"
-import UserTable from "../../ui/usersTable"
-import _ from "lodash"
-import { useSelector } from "react-redux"
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { paginate } from "../../../utils/paginate";
+import Pagination from "../../common/pagination";
+import GroupList from "../../common/groupList";
+import SearchStatus from "../../ui/searchStatus";
+import UserTable from "../../ui/usersTable";
+import _ from "lodash";
+import { useSelector } from "react-redux";
 import {
     getProfessions,
     getProfessionsLoadingStatus
-} from "../../../store/professions"
-import { getCurrentUserId, getUsersList } from "../../../store/users"
+} from "../../../store/professions";
+import { getCurrentUserId, getUsersList } from "../../../store/users";
 
 const UsersListPage = () => {
-    const users = useSelector(getUsersList())
-    const currentUserId = useSelector(getCurrentUserId())
+    const users = useSelector(getUsersList());
+    const currentUserId = useSelector(getCurrentUserId());
 
-    const professions = useSelector(getProfessions())
-    const professionsLoading = useSelector(getProfessionsLoadingStatus())
-    const [currentPage, setCurrentPage] = useState(1)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [selectedProf, setSelectedProf] = useState()
-    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" })
-    const pageSize = 8
+    const professions = useSelector(getProfessions());
+    const professionsLoading = useSelector(getProfessionsLoadingStatus());
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedProf, setSelectedProf] = useState();
+    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+    const pageSize = 8;
 
     const handleDelete = (userId) => {
         // setUsers(users.filter((user) => user._id !== userId));
-        console.log(userId)
-    }
+        console.log(userId);
+    };
     const handleToggleBookMark = (id) => {
         const newArray = users.map((user) => {
             if (user._id === id) {
-                return { ...user, bookmark: !user.bookmark }
+                return { ...user, bookmark: !user.bookmark };
             }
-            return user
-        })
+            return user;
+        });
         // setUsers(newArray);
-        console.log(newArray)
-    }
+        console.log(newArray);
+    };
 
     useEffect(() => {
-        setCurrentPage(1)
-    }, [selectedProf, searchQuery])
+        setCurrentPage(1);
+    }, [selectedProf, searchQuery]);
 
     const handleProfessionSelect = (item) => {
-        if (searchQuery !== "") setSearchQuery("")
-        setSelectedProf(item)
-    }
+        if (searchQuery !== "") setSearchQuery("");
+        setSelectedProf(item);
+    };
     const handleSearchQuery = ({ target }) => {
-        setSelectedProf(undefined)
-        setSearchQuery(target.value)
-    }
+        setSelectedProf(undefined);
+        setSearchQuery(target.value);
+    };
 
     const handlePageChange = (pageIndex) => {
-        setCurrentPage(pageIndex)
-    }
+        setCurrentPage(pageIndex);
+    };
     const handleSort = (item) => {
-        setSortBy(item)
-    }
+        setSortBy(item);
+    };
 
     if (users) {
         function filterUsers(data) {
@@ -75,20 +75,20 @@ const UsersListPage = () => {
                           JSON.stringify(user.profession) ===
                           JSON.stringify(selectedProf)
                   )
-                : data
-            return filteredUsers.filter((u) => u._id !== currentUserId)
+                : data;
+            return filteredUsers.filter((u) => u._id !== currentUserId);
         }
-        const filteredUsers = filterUsers(users)
-        const count = filteredUsers.length
+        const filteredUsers = filterUsers(users);
+        const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
             filteredUsers,
             [sortBy.path],
             [sortBy.order]
-        )
-        const usersCrop = paginate(sortedUsers, currentPage, pageSize)
+        );
+        const usersCrop = paginate(sortedUsers, currentPage, pageSize);
         const clearFilter = () => {
-            setSelectedProf()
-        }
+            setSelectedProf();
+        };
 
         return (
             <div className="d-flex">
@@ -136,12 +136,12 @@ const UsersListPage = () => {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
-    return "loading..."
-}
+    return "loading...";
+};
 UsersListPage.propTypes = {
     users: PropTypes.array
-}
+};
 
-export default UsersListPage
+export default UsersListPage;

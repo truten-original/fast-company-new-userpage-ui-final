@@ -1,11 +1,11 @@
-import React from "react"
-import useMockData from "../utils/mockData"
+import React from "react";
+import useMockData from "../utils/mockData";
 
 const Main = () => {
-    const { error, initialize, progress, status } = useMockData()
+    const { error, initialize, progress, status } = useMockData();
     const handleClick = () => {
-        initialize()
-    }
+        initialize();
+    };
     return (
         <div className="container mt-5">
             <h1> Main Page</h1>
@@ -20,7 +20,7 @@ const Main = () => {
                 Инициализировать
             </button>
         </div>
-    )
-}
+    );
+};
 
-export default Main
+export default Main;

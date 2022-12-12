@@ -11,6 +11,7 @@
         "bootstrap": "^5.1.0",
         "bootstrap-icons": "^1.8.3",
         "dotenv": "^16.0.3",
+        "history": "^4.9.0",
         "lodash": "^4.17.21",
         "nano": "^10.0.0",
         "nanoid": "^4.0.0",
@@ -24,7 +25,6 @@
         "react-select": "^5.4.0",
         "react-toastify": "^9.0.8",
         "web-vitals": "^2.1.4",
-        "history": "^4.9.0",
         "yup": "^0.32.11"
     },
     "scripts": {

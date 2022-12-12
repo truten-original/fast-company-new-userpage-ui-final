@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import {
-    getProfessions,
-    getProfessionsLoadingStatus
-} from "../../../store/professions"
+import { useHistory } from "react-router-dom"
+import { validator } from "../../../utils/validator"
+import TextField from "../../common/form/textField"
+import SelectField from "../../common/form/selectField"
+import RadioField from "../../common/form/radioField"
+import MultiSelectField from "../../common/form/multiSelectField"
+import BackHistoryButton from "../../common/backButton"
+import { useAuth } from "../../../hooks/useAuth"
+import { useSelector } from "react-redux"
 import {
     getQualities,
     getQualitiesLoadingStatus
 } from "../../../store/qualities"
-import { getCurrentUserData, updateUser } from "../../../store/users"
-import { validator } from "../../../utils/validator"
-import BackHistoryButton from "../../common/backButton"
-import MultiSelectField from "../../common/form/multiSelectField"
-import RadioField from "../../common/form/radioField"
-import SelectField from "../../common/form/selectField"
-import TextField from "../../common/form/textField"
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from "../../../store/professions"
+import { getCurrentUserData } from "../../../store/users"
 
 const EditUserPage = () => {
-    const dispatch = useDispatch()
+    const history = useHistory()
     const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState()
     const currentUser = useSelector(getCurrentUserData())
+    const { updateUserData } = useAuth()
     const qualities = useSelector(getQualities())
     const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
     const qualitiesList = qualities.map((q) => ({
@@ -39,12 +42,12 @@ const EditUserPage = () => {
         e.preventDefault()
         const isValid = validate()
         if (!isValid) return
-        dispatch(
-            updateUser({
-                ...data,
-                qualities: data.qualities.map((q) => q.value)
-            })
-        )
+        await updateUserData({
+            ...data,
+            qualities: data.qualities.map((q) => q.value)
+        })
+
+        history.replace(`/users/${currentUser._id}`)
     }
     function getQualitiesListByIds(qualitiesIds) {
         const qualitiesArray = []

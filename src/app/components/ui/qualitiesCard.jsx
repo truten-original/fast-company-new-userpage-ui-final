@@ -1,6 +1,6 @@
-import React from "react"
-import Qualities from "./qualities"
-import PropTypes from "prop-types"
+import React from "react";
+import Qualities from "./qualities";
+import PropTypes from "prop-types";
 
 const QualitiesCard = ({ data }) => {
     return (
@@ -14,10 +14,10 @@ const QualitiesCard = ({ data }) => {
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 QualitiesCard.propTypes = {
     data: PropTypes.array
-}
+};
 
-export default QualitiesCard
+export default QualitiesCard;

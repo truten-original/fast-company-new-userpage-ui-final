@@ -1,11 +1,11 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 
-import BookMark from "../common/bookmark"
-import Qualities from "./qualities"
-import Table from "../common/table"
-import { Link } from "react-router-dom"
-import Profession from "./profession"
+import BookMark from "../common/bookmark";
+import Qualities from "./qualities";
+import Table from "../common/table";
+import { Link } from "react-router-dom";
+import Profession from "./profession";
 
 const UserTable = ({
     users,
@@ -45,7 +45,7 @@ const UserTable = ({
                 />
             )
         }
-    }
+    };
     return (
         <Table
             onSort={onSort}
@@ -53,14 +53,14 @@ const UserTable = ({
             columns={columns}
             data={users}
         />
-    )
-}
+    );
+};
 
 UserTable.propTypes = {
     users: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
     onToggleBookMark: PropTypes.func.isRequired
-}
+};
 
-export default UserTable
+export default UserTable;

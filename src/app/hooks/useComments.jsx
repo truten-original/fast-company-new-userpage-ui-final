@@ -22,21 +22,13 @@ export const CommentsProvider = ({ children }) => {
     useEffect(() => {
         getComments()
     }, [userId])
-    async function createComment(data) {
-        const comment = {
-            ...data,
-            _id: nanoid(),
-            pageId: userId,
-            created_at: Date.now(),
-            userId: currentUserId
-        }
+    async function createComment(payload) {
         try {
-            const { content } = await commentService.createComment(comment)
+            const { content } = await commentService.createComment(payload)
             setComments((prevState) => [...prevState, content])
         } catch (error) {
             errorCatcher(error)
         }
-        console.log(comment)
     }
     async function getComments() {
         try {

@@ -1,11 +1,11 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import NavProfile from "./navProfile"
-import { useSelector } from "react-redux"
-import { getIsLoggedIn } from "../../store/users"
+import React from "react";
+import { Link } from "react-router-dom";
+import NavProfile from "./navProfile";
+import { useSelector } from "react-redux";
+import { getIsLoggedIn } from "../../store/users";
 
 const NavBar = () => {
-    const isLoggedIn = useSelector(getIsLoggedIn())
+    const isLoggedIn = useSelector(getIsLoggedIn());
     return (
         <nav className="navbar bg-light mb-3">
             <div className="container-fluid">
@@ -42,7 +42,7 @@ const NavBar = () => {
                 </div>
             </div>
         </nav>
-    )
-}
+    );
+};
 
-export default NavBar
+export default NavBar;

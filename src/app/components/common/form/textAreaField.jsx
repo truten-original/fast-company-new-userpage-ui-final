@@ -1,13 +1,13 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 
 const TextAreaField = ({ label, name, value, onChange, error }) => {
     const handleChange = ({ target }) => {
-        onChange({ name: target.name, value: target.value })
-    }
+        onChange({ name: target.name, value: target.value });
+    };
     const getInputClasses = () => {
-        return "form-control" + (error ? " is-invalid" : "")
-    }
+        return "form-control" + (error ? " is-invalid" : "");
+    };
 
     return (
         <div className="mb-4">
@@ -24,11 +24,11 @@ const TextAreaField = ({ label, name, value, onChange, error }) => {
                 {error && <div className="invalid-feedback ">{error}</div>}
             </div>
         </div>
-    )
-}
+    );
+};
 TextAreaField.defaultProps = {
     type: "text"
-}
+};
 TextAreaField.propTypes = {
     label: PropTypes.string,
     type: PropTypes.string,
@@ -36,6 +36,6 @@ TextAreaField.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.string
-}
+};
 
-export default TextAreaField
+export default TextAreaField;

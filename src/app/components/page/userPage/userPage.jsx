@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import PropTypes from "prop-types"
 import UserCard from "../../ui/userCard"
 import QualitiesCard from "../../ui/qualitiesCard"
@@ -7,18 +7,20 @@ import Comments from "../../ui/comments"
 import { CommentsProvider } from "../../../hooks/useComments"
 import { useSelector } from "react-redux"
 import { getUserById } from "../../../store/users"
+import { useAuth } from "../../../hooks/useAuth"
 
 const UserPage = ({ userId }) => {
     const user = useSelector(getUserById(userId))
-
-    if (user) {
+    const { currentUser } = useAuth()
+    console.log(currentUser)
+    if (currentUser) {
         return (
             <div className="container">
                 <div className="row gutters-sm">
                     <div className="col-md-4 mb-3">
-                        <UserCard user={user} />
-                        <QualitiesCard data={user.qualities} />
-                        <MeetingsCard value={user.completedMeetings} />
+                        <UserCard user={currentUser} />
+                        <QualitiesCard data={currentUser.qualities} />
+                        <MeetingsCard value={currentUser.completedMeetings} />
                     </div>
                     <div className="col-md-8">
                         <CommentsProvider>
